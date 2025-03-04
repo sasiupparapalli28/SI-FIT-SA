@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('side.png'); 
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            position: relative;
+            color: white;
+            backdrop-filter: blur(5px); 
+            margin-left: 80vh;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .set-goals-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .set-goals-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <span class="error" id="usernameError"></span>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error" id="emailError"></span>
+
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" required>
+            <span class="error" id="weightError"></span>
+
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" name="height" required>
+            <span class="error" id="heightError"></span>
+
+            <input type="submit" value="Submit">
+            <span class="success" id="successMessage"></span>
+
+            <button type="button" id="setGoalsBtn" class="set-goals-btn">SET GOALS</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let isValid = true;
+            document.querySelectorAll('.error').forEach(element => {
+                element.textContent = '';
+            });
+            const username = document.getElementById('username').value;
+            if (username.trim() === '') {
+                isValid = false;
+                document.getElementById('usernameError').textContent = 'Username is required.';
+            }
+            const email = document.getElementById('email').value;
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (email.trim() === '') {
+                isValid = false;
+                document.getElementById('emailError').textContent = 'Email is required.';
+            } else if (!emailPattern.test(email)) {
+                isValid = false;
+                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+            }
+            const weight = document.getElementById('weight').value;
+            if (weight.trim() === '') {
+                isValid = false;
+                document.getElementById('weightError').textContent = 'Weight is required.';
+            }
+            const height = document.getElementById('height').value;
+            if (height.trim() === '') {
+                isValid = false;
+                document.getElementById('heightError').textContent = 'Height is required.';
+            }
+            if (isValid) {
+                document.getElementById('successMessage').textContent = 'Form submitted successfully!';
+            }
+        });
+
+        document.getElementById('setGoalsBtn').addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+
+            if (username.trim() === '' || email.trim() === '' || weight.trim() === '' || height.trim() === '') {
+                alert('Please fill out the form before setting goals.');
+            } else {
+                window.location.href = 'goal.html'; // Redirect to goal.html when form is complete
+            }
+        });
+    </script>
+
+</body>
+</html>
